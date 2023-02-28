@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "637131438628",
+    "project_id": "gsczk-184bd",
+    "storage_bucket": "gsczk-184bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637131438628:android:ac42ee097436f391d0f6b1",
+        "android_client_info": {
+          "package_name": "com.example.keti_zuka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637131438628-3ee492r1inv7fkulv8cdip58qomu915n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH3yR2sDwsQuRPL_2TCBGLABpNZxGmAfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637131438628-3ee492r1inv7fkulv8cdip58qomu915n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
