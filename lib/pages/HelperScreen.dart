@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keti_zuka/constants.dart';
 import 'package:keti_zuka/my_icons_icons.dart';
 import 'package:keti_zuka/pages/HelperBodies/HelperHomeBody.dart';
+import 'package:keti_zuka/pages/HelperBodies/HelperSettings.dart';
 import 'package:keti_zuka/pages/HelperBodies/HelperTaskBody.dart';
 
 class HelperScreen extends StatefulWidget {
@@ -14,10 +16,12 @@ class HelperScreen extends StatefulWidget {
 
 class _HelperScreenState extends State<HelperScreen> {
   int _currentIndex = 0;
+  User user = FirebaseAuth.instance.currentUser!;
 
   final screens = const [
     HelperHomeBody(),
     HelperTaskBody(),
+    HelperSettingsBody(),
   ];
 
   @override
@@ -25,6 +29,7 @@ class _HelperScreenState extends State<HelperScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),

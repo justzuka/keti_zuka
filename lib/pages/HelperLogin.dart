@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keti_zuka/FirebaseStuff.dart';
 import 'package:keti_zuka/components/MyTextFormField.dart';
 
 import 'package:keti_zuka/constants.dart';
@@ -102,7 +103,10 @@ class _HelperLoginState extends State<HelperLogin> {
                                   child: FloatingActionButton.extended(
                                     elevation: 0,
                                     onPressed: () {
-                                      print(usernameController.text);
+                                      logIn(
+                                        usernameController.text.trim(),
+                                        passwordController.text.trim(),
+                                      );
                                     },
                                     label: const Text(
                                       "Log In",
