@@ -16,7 +16,7 @@ class HelperLogin extends StatefulWidget {
 }
 
 class _HelperLoginState extends State<HelperLogin> {
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
@@ -79,10 +79,10 @@ class _HelperLoginState extends State<HelperLogin> {
                           ),
                         ),
                         MyTextFormField(
-                          hint: "Username",
-                          label: "Username",
+                          hint: "Email",
+                          label: "Email",
                           hideText: false,
-                          controller: usernameController,
+                          controller: emailController,
                         ),
                         MyTextFormField(
                           hint: "Password",
@@ -104,7 +104,7 @@ class _HelperLoginState extends State<HelperLogin> {
                                     elevation: 0,
                                     onPressed: () {
                                       logIn(
-                                        usernameController.text.trim(),
+                                        emailController.text.trim(),
                                         passwordController.text.trim(),
                                       );
                                     },

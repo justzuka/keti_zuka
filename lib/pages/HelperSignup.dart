@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keti_zuka/FirebaseStuff.dart';
 import 'package:keti_zuka/components/MyTextFormField.dart';
 import 'package:keti_zuka/constants.dart';
 
@@ -14,7 +15,6 @@ class HelperSignup extends StatefulWidget {
 }
 
 class _HelperSignupState extends State<HelperSignup> {
-  final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   @override
@@ -78,12 +78,6 @@ class _HelperSignupState extends State<HelperSignup> {
                           controller: emailController,
                         ),
                         MyTextFormField(
-                          hint: "Username",
-                          label: "Set Username",
-                          hideText: false,
-                          controller: usernameController,
-                        ),
-                        MyTextFormField(
                           hint: "Password",
                           label: "Set Password",
                           hideText: true,
@@ -101,7 +95,13 @@ class _HelperSignupState extends State<HelperSignup> {
                                   height: 48,
                                   child: FloatingActionButton.extended(
                                     elevation: 0,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      signUp(
+                                        emailController.text.trim(),
+                                        passwordController.text.trim(),
+                                        context,
+                                      );
+                                    },
                                     label: const Text(
                                       "Sign Up",
                                       style: TextStyle(
