@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:keti_zuka/pages/HelperLogin.dart';
+import 'package:keti_zuka/pages/Login.dart';
 import 'package:keti_zuka/pages/HelperScreen.dart';
-import 'package:keti_zuka/pages/HelperSignup.dart';
+import 'package:keti_zuka/pages/Signup.dart';
 
-class HelperSignLoginScreen extends StatefulWidget {
-  const HelperSignLoginScreen({super.key});
+class SignLoginScreen extends StatefulWidget {
+  const SignLoginScreen({super.key});
 
   @override
-  State<HelperSignLoginScreen> createState() => _HelperSignLoginScreenState();
+  State<SignLoginScreen> createState() => _SignLoginScreenState();
 }
 
-class _HelperSignLoginScreenState extends State<HelperSignLoginScreen> {
+class _SignLoginScreenState extends State<SignLoginScreen> {
   void toggleIndex() {
     setState(() {
       isLogin = !isLogin;
@@ -37,10 +37,10 @@ class _HelperSignLoginScreenState extends State<HelperSignLoginScreen> {
                 backgroundColor: Colors.transparent,
               ),
               body: isLogin
-                  ? HelperLogin(
+                  ? Login(
                       toggleIndex: toggleIndex,
                     )
-                  : HelperSignup(toggleIndex: toggleIndex));
+                  : Signup(toggleIndex: toggleIndex));
         }
       },
     );

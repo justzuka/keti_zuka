@@ -3,20 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keti_zuka/FirebaseStuff.dart';
 import 'package:keti_zuka/components/MyTextFormField.dart';
+
 import 'package:keti_zuka/constants.dart';
 
-class HelperSignup extends StatefulWidget {
-  const HelperSignup({super.key, required this.toggleIndex});
+class Login extends StatefulWidget {
+  const Login({super.key, required this.toggleIndex});
 
   final Function() toggleIndex;
 
   @override
-  State<HelperSignup> createState() => _HelperSignupState();
+  State<Login> createState() => _LoginState();
 }
 
-class _HelperSignupState extends State<HelperSignup> {
-  final TextEditingController passwordController = TextEditingController();
+class _LoginState extends State<Login> {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,7 +58,7 @@ class _HelperSignupState extends State<HelperSignup> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
-                              "SIGN UP",
+                              "LOGIN",
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 50,
@@ -62,7 +69,7 @@ class _HelperSignupState extends State<HelperSignup> {
                         const Padding(
                           padding: EdgeInsets.only(top: 5, bottom: 15),
                           child: Text(
-                            " TO BECOME A HELPER ",
+                            "TO CONTINUE AS A HELPER",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -73,13 +80,13 @@ class _HelperSignupState extends State<HelperSignup> {
                         ),
                         MyTextFormField(
                           hint: "Email",
-                          label: "Set Email",
+                          label: "Email",
                           hideText: false,
                           controller: emailController,
                         ),
                         MyTextFormField(
                           hint: "Password",
-                          label: "Set Password",
+                          label: "Password",
                           hideText: true,
                           controller: passwordController,
                         ),
@@ -91,19 +98,18 @@ class _HelperSignupState extends State<HelperSignup> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 10),
                                 child: Container(
-                                  width: 77,
+                                  width: 68,
                                   height: 48,
                                   child: FloatingActionButton.extended(
                                     elevation: 0,
                                     onPressed: () {
-                                      signUp(
+                                      logIn(
                                         emailController.text.trim(),
                                         passwordController.text.trim(),
-                                        context,
                                       );
                                     },
                                     label: const Text(
-                                      "Sign Up",
+                                      "Log In",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontStyle: FontStyle.normal,
@@ -118,7 +124,7 @@ class _HelperSignupState extends State<HelperSignup> {
                               GestureDetector(
                                 onTap: widget.toggleIndex,
                                 child: const Text(
-                                  "Already have an account",
+                                  "Don't have an account yet",
                                   style: TextStyle(
                                     decoration: TextDecoration.underline,
                                   ),

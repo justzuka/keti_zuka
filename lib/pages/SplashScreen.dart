@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keti_zuka/components/OrangeButton.dart';
 import 'package:keti_zuka/constants.dart';
 import 'package:keti_zuka/pages/DonorType.dart';
-import 'package:keti_zuka/pages/HelperLogin.dart';
-import 'package:keti_zuka/pages/HelperSignLoginScreen.dart';
+import 'package:keti_zuka/pages/Login.dart';
+import 'package:keti_zuka/pages/SignLoginScreen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -39,10 +39,10 @@ class SplashScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(30),
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 100),
+                        padding: const EdgeInsets.only(top: 0),
                         child: Column(
                           children: [
                             SvgPicture.asset(loving1),
@@ -66,36 +66,16 @@ class SplashScreen extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          const Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: Text(
-                              'YOU ARE A',
-                              style: TextStyle(fontSize: 24),
-                            ),
-                          ),
                           OrangeButton(
-                            label: 'Donor',
-                            onPressFunc: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const DonorType()));
-                            },
-                          ),
-                          OrangeButton(
-                            label: 'Helper',
+                            label: 'Welcome',
                             onPressFunc: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const HelperSignLoginScreen()));
+                                          const SignLoginScreen()));
                             },
                           ),
-                          OrangeButton(
-                            label: 'Charity',
-                            onPressFunc: () {},
-                          )
                         ],
                       )
                     ]),
