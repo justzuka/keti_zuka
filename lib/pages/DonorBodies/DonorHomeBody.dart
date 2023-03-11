@@ -3,14 +3,14 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constants.dart';
 
-class HelperHomeBody extends StatefulWidget {
-  const HelperHomeBody({super.key});
+class DonorHomeBody extends StatefulWidget {
+  const DonorHomeBody({super.key});
 
   @override
-  State<HelperHomeBody> createState() => _HelperHomeBodyState();
+  State<DonorHomeBody> createState() => _DonorHomeBodyState();
 }
 
-class _HelperHomeBodyState extends State<HelperHomeBody> {
+class _DonorHomeBodyState extends State<DonorHomeBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,14 +35,12 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 100),
-                    child: Stack(children: [
-                      SvgPicture.asset(helperHomeSvg),
-                    ]),
+                    padding: const EdgeInsets.only(right: 50),
+                    child: SvgPicture.asset(helperHomeSvg),
                   ),
                   Container(
                     width: 306,
-                    height: 122,
+                    height: 306,
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(40)),
@@ -60,7 +58,7 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                 ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );

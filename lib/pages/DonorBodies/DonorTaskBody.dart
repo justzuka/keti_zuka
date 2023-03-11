@@ -3,27 +3,27 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../constants.dart';
 
-class HelperHomeBody extends StatefulWidget {
-  const HelperHomeBody({super.key});
+class DonorTaskBody extends StatefulWidget {
+  const DonorTaskBody({super.key});
 
   @override
-  State<HelperHomeBody> createState() => _HelperHomeBodyState();
+  State<DonorTaskBody> createState() => _DonorTaskBodyState();
 }
 
-class _HelperHomeBodyState extends State<HelperHomeBody> {
+class _DonorTaskBodyState extends State<DonorTaskBody> {
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.white,
+      color: mainOrangeColor,
       child: Stack(
         children: [
           Container(
             width: double.infinity,
             height: 225 + topOffsett,
             decoration: const BoxDecoration(
-              color: mainOrangeColor,
+              color: Colors.white,
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(40.0),
                   bottomLeft: Radius.circular(40.0)),
@@ -34,17 +34,18 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
             child: Center(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 100),
-                    child: Stack(children: [
-                      SvgPicture.asset(helperHomeSvg),
-                    ]),
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 30, top: topOffsett),
+                    child: Text(
+                      "CHALLENGES",
+                      style: TextStyle(fontSize: 50),
+                    ),
                   ),
                   Container(
                     width: 306,
-                    height: 122,
+                    height: 170,
                     decoration: const BoxDecoration(
-                      color: Colors.white,
+                      color: mainOrangeColor,
                       borderRadius: BorderRadius.all(Radius.circular(40)),
                       boxShadow: [
                         BoxShadow(
@@ -60,7 +61,7 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                 ],
               ),
             ),
-          ),
+          )
         ],
       ),
     );

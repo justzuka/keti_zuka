@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:keti_zuka/pages/DonorScreen.dart';
 import 'package:keti_zuka/pages/Login.dart';
 import 'package:keti_zuka/pages/HelperScreen.dart';
 import 'package:keti_zuka/pages/Signup.dart';
@@ -12,7 +13,7 @@ class SignLoginScreen extends StatefulWidget {
 }
 
 class _SignLoginScreenState extends State<SignLoginScreen> {
-  void toggleIndex() {
+  void toggleIsLogin() {
     setState(() {
       isLogin = !isLogin;
     });
@@ -20,13 +21,27 @@ class _SignLoginScreenState extends State<SignLoginScreen> {
 
   bool isLogin = true;
 
+  void toggleIsHelper() {
+    setState(() {
+      isHelper = !isHelper;
+    });
+  }
+
+  bool isHelper = true;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return const HelperScreen();
+          return isHelper
+              ? HelperScreen(
+                  toggleIsHelper: toggleIsHelper,
+                )
+              : DonorScreen(
+                  toggleIsHelper: toggleIsHelper,
+                );
         } else {
           return Scaffold(
               resizeToAvoidBottomInset: false,
@@ -38,9 +53,9 @@ class _SignLoginScreenState extends State<SignLoginScreen> {
               ),
               body: isLogin
                   ? Login(
-                      toggleIndex: toggleIndex,
+                      toggleIndex: toggleIsLogin,
                     )
-                  : Signup(toggleIndex: toggleIndex));
+                  : Signup(toggleIndex: toggleIsLogin));
         }
       },
     );

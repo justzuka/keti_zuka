@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:keti_zuka/components/OrangeButton.dart';
 import 'package:keti_zuka/constants.dart';
-import 'package:keti_zuka/pages/DonorType.dart';
-import 'package:keti_zuka/pages/Login.dart';
 import 'package:keti_zuka/pages/SignLoginScreen.dart';
 
 class SplashScreen extends StatelessWidget {

@@ -1,30 +1,31 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:keti_zuka/components/DonorHelperChange.dart';
 import 'package:keti_zuka/constants.dart';
 import 'package:keti_zuka/my_icons_icons.dart';
-import 'package:keti_zuka/pages/HelperBodies/HelperHomeBody.dart';
-import 'package:keti_zuka/pages/HelperBodies/HelperSettings.dart';
-import 'package:keti_zuka/pages/HelperBodies/HelperTaskBody.dart';
+import 'package:keti_zuka/pages/DonorBodies/DonorHomeBody.dart';
+import 'package:keti_zuka/pages/DonorBodies/DonorSettingsBody.dart';
+import 'package:keti_zuka/pages/DonorBodies/DonorTaskBody.dart';
 
-class HelperScreen extends StatefulWidget {
-  const HelperScreen({super.key, required this.toggleIsHelper});
+import '../components/DonorHelperChange.dart';
+
+class DonorScreen extends StatefulWidget {
+  const DonorScreen({super.key, required this.toggleIsHelper});
 
   final Function() toggleIsHelper;
 
   @override
-  State<HelperScreen> createState() => _HelperScreenState();
+  State<DonorScreen> createState() => _DonorScreenState();
 }
 
-class _HelperScreenState extends State<HelperScreen> {
+class _DonorScreenState extends State<DonorScreen> {
   int _currentIndex = 0;
   User user = FirebaseAuth.instance.currentUser!;
 
-  final screens = [
-    HelperHomeBody(),
-    HelperTaskBody(),
-    HelperSettingsBody(),
+  final screens = const [
+    DonorHomeBody(),
+    DonorTaskBody(),
+    DonorSettingsBody(),
   ];
 
   @override
@@ -35,14 +36,14 @@ class _HelperScreenState extends State<HelperScreen> {
       // appBar: AppBar(
       //   automaticallyImplyLeading: false,
       //   elevation: 0,
-      //   backgroundColor: Colors.red,
+      //   backgroundColor: Colors.transparent,
       // ),
       body: Stack(clipBehavior: Clip.none, children: [
         IndexedStack(
           index: _currentIndex,
           children: screens,
         ),
-        DonorHelperChange(onTap: widget.toggleIsHelper, toWhere: "To Donor")
+        DonorHelperChange(onTap: widget.toggleIsHelper, toWhere: "To Helper")
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
