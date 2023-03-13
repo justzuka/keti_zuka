@@ -34,25 +34,34 @@ class _DonorHomeBodyState extends State<DonorHomeBody> {
             child: Center(
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 50),
-                    child: SvgPicture.asset(helperHomeSvg),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 100),
+                    child: Text(
+                      "Hello {Donor}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w300,
+                        fontSize: 21,
+                      ),
+                    ),
                   ),
-                  Container(
-                    width: 306,
-                    height: 306,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(33, 0, 0, 0),
-                          blurRadius: 10.0,
-                          spreadRadius: 0.1,
-                          offset:
-                              Offset(0, 10), // shadow direction: bottom right
-                        )
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Container(
+                      width: 306,
+                      height: 122,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(33, 0, 0, 0),
+                            blurRadius: 10.0,
+                            spreadRadius: 0.1,
+                            offset:
+                                Offset(0, 10), // shadow direction: bottom right
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ],

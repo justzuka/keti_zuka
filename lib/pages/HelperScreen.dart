@@ -42,7 +42,13 @@ class _HelperScreenState extends State<HelperScreen> {
           index: _currentIndex,
           children: screens,
         ),
-        DonorHelperChange(onTap: widget.toggleIsHelper, toWhere: "To Donor")
+        _currentIndex == 0
+            ? DonorHelperChange(
+                onTap: widget.toggleIsHelper, toWhere: "To Donor")
+            : Container(
+                width: 0,
+                height: 0,
+              ),
       ]),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
