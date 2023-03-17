@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keti_zuka/DatabaseModels/MyUser.dart';
+import 'package:keti_zuka/FirebaseStuff.dart';
 
 import '../../constants.dart';
 
@@ -57,12 +59,17 @@ Widget userNameMoneyEarned(String name, String money) {
 
 class _HelperHomeBodyState extends State<HelperHomeBody> {
   List<MyUser> listOfUsers = [];
+  MyUser? userInfo = null;
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     getUserDataList();
+    getCurrentUser();
+  }
+
+  Future getCurrentUser() async {
+    userInfo = await getCurrentUserData();
   }
 
   Future getUserDataList() async {
@@ -121,6 +128,28 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                               Offset(0, 10), // shadow direction: bottom right
                         )
                       ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 60,
+                              height: 60,
+                              child: SvgPicture.asset(coinSvg),
+                            ),
+                            Text(
+                              userInfo == null
+                                  ? "Loading"
+                                  : "\$" + '${userInfo?.helpTotal}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 22,
+                                letterSpacing: 1,
+                              ),
+                            ),
+                          ]),
                     ),
                   ),
                   const Padding(

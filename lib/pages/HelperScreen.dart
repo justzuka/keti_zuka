@@ -19,7 +19,6 @@ class HelperScreen extends StatefulWidget {
 
 class _HelperScreenState extends State<HelperScreen> {
   int _currentIndex = 0;
-  User user = FirebaseAuth.instance.currentUser!;
 
   final screens = [
     HelperHomeBody(),

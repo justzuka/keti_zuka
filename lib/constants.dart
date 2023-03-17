@@ -7,5 +7,6 @@ const String companySvg = 'lib/svgs/CompanySvg.svg';
 const String companyDonorSvg = 'lib/svgs/compDonorSvg.svg';
 const String indSvg = 'lib/svgs/IndSvg.svg';
 const String helperHomeSvg = 'lib/svgs/HelperHomeSvg.svg';
+const String coinSvg = 'lib/svgs/coins.svg';
 const Color mainOrangeColor = Color.fromRGBO(255, 203, 119, 1);
 const double topOffsett = 50;

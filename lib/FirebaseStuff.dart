@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keti_zuka/DatabaseModels/MyUser.dart';
 
+User user = FirebaseAuth.instance.currentUser!;
+
 Future logIn(String email, String password) async {
   await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: email,
@@ -48,4 +50,11 @@ Future signUp(String email, String password, context) async {
   }
 
   Navigator.of(context).pop();
+}
+
+Future getCurrentUserData() async {
+  var data =
+      await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+  MyUser us = MyUser.fromSnapshot(data);
+  return us;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:keti_zuka/components/MyInputField.dart';
 
 import '../../constants.dart';
 
@@ -11,13 +12,14 @@ class DonorTaskBody extends StatefulWidget {
 }
 
 class _DonorTaskBodyState extends State<DonorTaskBody> {
+  final TextEditingController charityNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: double.infinity,
       color: mainOrangeColor,
-      child: Stack(
+      child: Column(
         children: [
           Container(
             width: double.infinity,
@@ -28,40 +30,55 @@ class _DonorTaskBodyState extends State<DonorTaskBody> {
                   bottomRight: Radius.circular(40.0),
                   bottomLeft: Radius.circular(40.0)),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: topOffsett),
-            child: Center(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 30, top: topOffsett),
-                    child: Text(
-                      "CHALLENGES",
-                      style: TextStyle(fontSize: 50),
-                    ),
-                  ),
-                  Container(
-                    width: 306,
-                    height: 170,
-                    decoration: const BoxDecoration(
-                      color: mainOrangeColor,
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(33, 0, 0, 0),
-                          blurRadius: 10.0,
-                          spreadRadius: 0.1,
-                          offset:
-                              Offset(0, 10), // shadow direction: bottom right
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+            child: Padding(
+              padding: const EdgeInsets.only(top: topOffsett),
+              child: Center(
+                child: Column(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 30, top: topOffsett),
+                      child: Text(
+                        "MAKE A DONATION",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 50),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          )
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: double.infinity,
+              color: Colors.transparent,
+              alignment: Alignment.topLeft,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      MyInputField(
+                        hint: "..",
+                        label: "Choose the charity",
+                        hideText: false,
+                        isText: true,
+                        controller: charityNameController,
+                      ),
+                      MyInputField(
+                        hint: "..",
+                        label: "Approximate amount",
+                        hideText: false,
+                        isText: false,
+                        controller: charityNameController,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
