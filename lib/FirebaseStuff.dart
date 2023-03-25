@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keti_zuka/DatabaseModels/MyUser.dart';
 
+import 'DatabaseModels/Challenge.dart';
+
 User user = FirebaseAuth.instance.currentUser!;
 
 Future logIn(String email, String password) async {
@@ -57,4 +59,21 @@ Future getCurrentUserData() async {
       await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
   MyUser us = MyUser.fromSnapshot(data);
   return us;
+}
+
+Future createChallenge(
+    String charityName, String challengeType, double approxAmount) async {
+  Challenge newChallenge = Challenge();
+  newChallenge.charityName = charityName;
+  newChallenge.ownerID = user.uid;
+  newChallenge.challengeType = challengeType;
+  newChallenge.approxAmount = approxAmount;
+  newChallenge.currentlyRaised = 0.0;
+  newChallenge.participants = [];
+  newChallenge.finished = false;
+  newChallenge.createdAt = DateTime.now();
+
+  await FirebaseFirestore.instance
+      .collection('challenges')
+      .add(newChallenge.toJson());
 }

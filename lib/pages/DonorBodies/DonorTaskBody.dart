@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keti_zuka/components/MyInputField.dart';
+import 'package:keti_zuka/components/OrangeButton.dart';
 
+import '../../FirebaseStuff.dart';
 import '../../constants.dart';
+
+List<String> list = <String>['Math Quiz', 'Leetcode Challenge'];
 
 class DonorTaskBody extends StatefulWidget {
   const DonorTaskBody({super.key});
@@ -13,6 +17,10 @@ class DonorTaskBody extends StatefulWidget {
 
 class _DonorTaskBodyState extends State<DonorTaskBody> {
   final TextEditingController charityNameController = TextEditingController();
+  final TextEditingController approximateAmount = TextEditingController();
+
+  String dropdownValue = list.first;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -71,7 +79,59 @@ class _DonorTaskBodyState extends State<DonorTaskBody> {
                         label: "Approximate amount",
                         hideText: false,
                         isText: false,
-                        controller: charityNameController,
+                        controller: approximateAmount,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Choose the challenge",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: dropdownValue,
+                          icon: const Icon(Icons.arrow_downward),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.white,
+                          ),
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              dropdownValue = value!;
+                            });
+                          },
+                          items: list
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      OrangeButton(
+                        label: "submit",
+                        onPressFunc: () {
+                          createChallenge(
+                              charityNameController.text,
+                              dropdownValue,
+                              double.parse(approximateAmount.text));
+                          setState(() {
+                            charityNameController.clear();
+                            approximateAmount.clear();
+                            dropdownValue = list.first;
+                          });
+                        },
+                        inverted: true,
                       ),
                     ],
                   ),

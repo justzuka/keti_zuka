@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class OrangeButton extends StatefulWidget {
-  const OrangeButton(
-      {super.key, required this.label, required this.onPressFunc});
+  OrangeButton(
+      {super.key,
+      required this.label,
+      required this.onPressFunc,
+      this.inverted = false});
 
   final String label;
   final Function onPressFunc;
+  final bool inverted;
 
   @override
   State<OrangeButton> createState() => _OrangeButtonState();
@@ -30,13 +34,15 @@ class _OrangeButtonState extends State<OrangeButton> {
           },
           label: Text(
             widget.label,
-            style: const TextStyle(
+            style: TextStyle(
+              color: widget.inverted == false ? Colors.white : mainOrangeColor,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w600,
               fontSize: 14,
             ),
           ),
-          backgroundColor: mainOrangeColor,
+          backgroundColor:
+              widget.inverted == false ? mainOrangeColor : Colors.white,
         ),
       ),
     );
