@@ -6,8 +6,8 @@ class Challenge {
   String? challengeType;
   double? approxAmount;
   double? currentlyRaised;
-  List<String>? participants;
   bool? finished;
+  String? description;
   DateTime? createdAt;
 
   Challenge();
@@ -18,8 +18,8 @@ class Challenge {
         'challengeType': challengeType,
         'approxAmount': approxAmount,
         'currentlyRaised': currentlyRaised,
-        'participants': participants,
         'finished': finished,
+        'description': description,
         'createdAt': createdAt,
       };
 
@@ -29,7 +29,7 @@ class Challenge {
         challengeType = snapshot.data()['challengeType'],
         approxAmount = snapshot.data()['approxAmount'] as double,
         currentlyRaised = snapshot.data()['currentlyRaised'] as double,
-        participants = List<String>.from(snapshot.data()['participants']),
         finished = snapshot.data()['finished'],
+        description = snapshot.data()['description'],
         createdAt = snapshot.data()['createdAt'].toDate();
 }

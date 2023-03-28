@@ -18,6 +18,8 @@ class DonorTaskBody extends StatefulWidget {
 class _DonorTaskBodyState extends State<DonorTaskBody> {
   final TextEditingController charityNameController = TextEditingController();
   final TextEditingController approximateAmount = TextEditingController();
+  final TextEditingController charityDescriptionController =
+      TextEditingController();
 
   String dropdownValue = list.first;
 
@@ -76,6 +78,13 @@ class _DonorTaskBodyState extends State<DonorTaskBody> {
                       ),
                       MyInputField(
                         hint: "..",
+                        label: "Enter the description of the donation",
+                        hideText: false,
+                        isText: true,
+                        controller: charityDescriptionController,
+                      ),
+                      MyInputField(
+                        hint: "..",
                         label: "Approximate amount",
                         hideText: false,
                         isText: false,
@@ -124,10 +133,12 @@ class _DonorTaskBodyState extends State<DonorTaskBody> {
                           createChallenge(
                               charityNameController.text,
                               dropdownValue,
-                              double.parse(approximateAmount.text));
+                              double.parse(approximateAmount.text),
+                              charityDescriptionController.text);
                           setState(() {
                             charityNameController.clear();
                             approximateAmount.clear();
+                            charityDescriptionController.clear();
                             dropdownValue = list.first;
                           });
                         },

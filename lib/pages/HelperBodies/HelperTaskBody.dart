@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:keti_zuka/pages/HelperBodies/ChallengeDescription.dart';
 
 import '../../DatabaseModels/Challenge.dart';
 import '../../constants.dart';
@@ -12,45 +13,58 @@ class HelperTaskBody extends StatefulWidget {
   State<HelperTaskBody> createState() => _HelperTaskBodyState();
 }
 
-Widget challengeItem(String name, String challengeType) {
+Widget challengeItem(String name, String challengeType, String challengeID,
+    BuildContext context) {
   return Center(
-    child: Container(
-      width: double.infinity,
-      height: 100,
-      color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
-        child: Row(children: [
-          Container(
-            width: 50,
-            height: 50,
-            color: const Color.fromARGB(255, 210, 210, 210),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  //select first 40 characters if the name is longer than 40
-                  name.length > 30 ? '${name.substring(0, 30)}..' : name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  challengeType,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+    child: GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ChallengeDescription(
+              challengeID: challengeID,
             ),
           ),
-        ]),
+        );
+      },
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
+          child: Row(children: [
+            Container(
+              width: 50,
+              height: 50,
+              color: const Color.fromARGB(255, 210, 210, 210),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    //select first 40 characters if the name is longer than 40
+                    name.length > 30 ? '${name.substring(0, 30)}..' : name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    challengeType,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     ),
   );
@@ -58,6 +72,7 @@ Widget challengeItem(String name, String challengeType) {
 
 class _HelperTaskBodyState extends State<HelperTaskBody> {
   List<Challenge> listOfChallenges = [];
+  List<String> listOfChallengeIDs = [];
   Future getChallengeDataList() async {
     var data = await FirebaseFirestore.instance
         .collection("challenges")
@@ -67,6 +82,7 @@ class _HelperTaskBodyState extends State<HelperTaskBody> {
     setState(() {
       listOfChallenges =
           List.from(data.docs.map((doc) => Challenge.fromSnapshot(doc)));
+      listOfChallengeIDs = List.from(data.docs.map((doc) => doc.id));
     });
   }
 
@@ -144,7 +160,10 @@ class _HelperTaskBodyState extends State<HelperTaskBody> {
                             String typeOfChallenge =
                                 listOfChallenges[index].challengeType ??
                                     "Is null";
-                            return challengeItem(charityName, typeOfChallenge);
+                            String challengeID =
+                                listOfChallengeIDs[index] ?? "Is null";
+                            return challengeItem(charityName, typeOfChallenge,
+                                challengeID, context);
                           },
                         ),
                       ),

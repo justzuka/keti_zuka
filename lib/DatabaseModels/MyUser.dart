@@ -6,9 +6,6 @@ class MyUser {
   String? profilePicture;
   double? helpTotal;
   double? donorTotal;
-  List<String>? recentChallenges;
-  List<String>? donorChallenges;
-  String? leetcodeUsername;
   DateTime? createdAt;
 
   MyUser();
@@ -19,9 +16,6 @@ class MyUser {
         'profilePicture': profilePicture,
         'helpTotal': helpTotal,
         'donorTotal': donorTotal,
-        'recentChallenges': recentChallenges,
-        'donorChallenges': donorChallenges,
-        'leetcodeUsername': leetcodeUsername,
         'createdAt': createdAt,
       };
 
@@ -31,9 +25,5 @@ class MyUser {
         profilePicture = snapshot.data()['profilePicture'],
         helpTotal = snapshot.data()['helpTotal'] as double,
         donorTotal = snapshot.data()['donorTotal'] as double,
-        recentChallenges =
-            List<String>.from(snapshot.data()['recentChallenges']),
-        donorChallenges = List<String>.from(snapshot.data()['donorChallenges']),
-        leetcodeUsername = snapshot.data()['leetcodeUsername'],
         createdAt = snapshot.data()['createdAt'].toDate();
 }

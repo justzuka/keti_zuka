@@ -31,9 +31,6 @@ Future signUp(String email, String password, context) async {
     newUser.email = email;
     newUser.helpTotal = 0.0;
     newUser.donorTotal = 0.0;
-    newUser.recentChallenges = [];
-    newUser.donorChallenges = [];
-    newUser.leetcodeUsername = null;
     newUser.createdAt = DateTime.now();
 
     await FirebaseAuth.instance
@@ -61,16 +58,25 @@ Future getCurrentUserData() async {
   return us;
 }
 
-Future createChallenge(
-    String charityName, String challengeType, double approxAmount) async {
+Future getCurrentChallengeData(String challengeID) async {
+  var data = await FirebaseFirestore.instance
+      .collection("challenges")
+      .doc(challengeID)
+      .get();
+  Challenge ch = Challenge.fromSnapshot(data);
+  return ch;
+}
+
+Future createChallenge(String charityName, String challengeType,
+    double approxAmount, String description) async {
   Challenge newChallenge = Challenge();
   newChallenge.charityName = charityName;
   newChallenge.ownerID = user.uid;
   newChallenge.challengeType = challengeType;
   newChallenge.approxAmount = approxAmount;
   newChallenge.currentlyRaised = 0.0;
-  newChallenge.participants = [];
   newChallenge.finished = false;
+  newChallenge.description = description;
   newChallenge.createdAt = DateTime.now();
 
   await FirebaseFirestore.instance
