@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:keti_zuka/DatabaseModels/MyUser.dart';
 
 import 'DatabaseModels/Challenge.dart';
+import 'DatabaseModels/ChallengeAndUser.dart';
+import 'DatabaseModels/LeetcodeProfile.dart';
 
 User user = FirebaseAuth.instance.currentUser!;
 
@@ -82,4 +84,49 @@ Future createChallenge(String charityName, String challengeType,
   await FirebaseFirestore.instance
       .collection('challenges')
       .add(newChallenge.toJson());
+}
+
+Future alreadyParticipatesInLeetcodeFirebase() async {
+  var data = await FirebaseFirestore.instance
+      .collection("challengeanduser")
+      .where("userID", isEqualTo: user.uid)
+      .where("challengeType", isEqualTo: "Leetcode Challenge")
+      .get();
+  if (data.docs.isEmpty) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+Future createChallengeAndUserforLeetcode(String challengeID,
+    LeetcodeProfile leetcodeProfile, String leetcodeUsername) async {
+  ChallengeAndUser newChallengeAndUser = ChallengeAndUser();
+  newChallengeAndUser.userID = user.uid;
+  newChallengeAndUser.challengeID = challengeID;
+  newChallengeAndUser.challengeType = 'Leetcode Challenge';
+  newChallengeAndUser.currentryRaised = 0.0;
+  newChallengeAndUser.leetcodeUsername = leetcodeUsername;
+  newChallengeAndUser.easy = leetcodeProfile.easy;
+  newChallengeAndUser.medium = leetcodeProfile.medium;
+  newChallengeAndUser.hard = leetcodeProfile.hard;
+  newChallengeAndUser.exited = false;
+  newChallengeAndUser.createdAt = DateTime.now();
+
+  await FirebaseFirestore.instance
+      .collection('challengeanduser')
+      .add(newChallengeAndUser.toJson());
+}
+
+Future checkIfChallengeEntered(String challengeID) async {
+  var data = await FirebaseFirestore.instance
+      .collection("challengeanduser")
+      .where("userID", isEqualTo: user.uid)
+      .where("challengeID", isEqualTo: challengeID)
+      .get();
+  if (data.docs.isEmpty) {
+    return false;
+  } else {
+    return true;
+  }
 }

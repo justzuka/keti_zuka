@@ -4,7 +4,9 @@ import 'package:keti_zuka/DatabaseModels/Challenge.dart';
 import 'package:keti_zuka/components/MyInputField.dart';
 import 'package:keti_zuka/components/OrangeButton.dart';
 
+import '../../DatabaseModels/LeetcodeProfile.dart';
 import '../../FirebaseStuff.dart';
+import '../../LeetcodeAPI.dart';
 import '../../constants.dart';
 
 class ChallengeDescription extends StatefulWidget {
@@ -17,6 +19,11 @@ class ChallengeDescription extends StatefulWidget {
 
 class _ChallengeDescriptionState extends State<ChallengeDescription> {
   Challenge currentChallenge = Challenge();
+  bool entered = false;
+
+  final TextEditingController leetcodeUsernameController =
+      TextEditingController();
+
   Future<void> getChallenge() async {
     Challenge challengeAnswer =
         await getCurrentChallengeData(widget.challengeID);
@@ -25,9 +32,17 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
     });
   }
 
+  Future<void> enterUpdate() async {
+    bool temp = await checkIfChallengeEntered(widget.challengeID);
+    setState(() {
+      entered = temp;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    enterUpdate();
     getChallenge();
   }
 
@@ -90,15 +105,66 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                     child: Column(
                       children: [
                         Text(
-                          currentChallenge.description ?? "charity description",
+                          currentChallenge.description ??
+                              "Challenge Description",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 30),
                         ),
-                        OrangeButton(
-                          label: "submit",
-                          onPressFunc: () {},
-                          inverted: true,
-                        ),
+                        currentChallenge == Null
+                            ? const Text("Loading")
+                            : currentChallenge.challengeType == "Math Quiz"
+                                ? Text("Math Quiz",
+                                    style: TextStyle(fontSize: 20))
+                                : Column(
+                                    children: [
+                                      Text(
+                                        "Leetcode Challenge",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      entered
+                                          ? SizedBox.shrink()
+                                          : MyInputField(
+                                              hint: 'Leetcode username',
+                                              label: "Leetcode Username",
+                                              hideText: false,
+                                              controller:
+                                                  leetcodeUsernameController,
+                                              isText: true),
+                                    ],
+                                  ),
+                        entered
+                            ? OrangeButton(
+                                label: "Go to Task",
+                                onPressFunc: () {},
+                                inverted: true,
+                              )
+                            : OrangeButton(
+                                label: "enter",
+                                onPressFunc: () async {
+                                  if (currentChallenge.challengeType ==
+                                      "Leetcode Challenge") {
+                                    if (await alreadyParticipatesInLeetcodeFirebase()) {
+                                      print("Already participates in leetcode");
+                                    } else {
+                                      LeetcodeProfile? profile =
+                                          await getLeetcodeData(
+                                              leetcodeUsernameController.text);
+                                      if (profile == null) {
+                                        print("Error, profile null");
+                                      } else {
+                                        createChallengeAndUserforLeetcode(
+                                            widget.challengeID,
+                                            profile,
+                                            leetcodeUsernameController.text);
+                                        enterUpdate();
+                                        print("Hello");
+                                      }
+                                    }
+                                  }
+                                },
+                                inverted: true,
+                              ),
                       ],
                     ),
                   ),
