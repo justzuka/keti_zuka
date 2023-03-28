@@ -118,6 +118,20 @@ Future createChallengeAndUserforLeetcode(String challengeID,
       .add(newChallengeAndUser.toJson());
 }
 
+Future createChallengeAndUserforMath(String challengeID) async {
+  ChallengeAndUser newChallengeAndUser = ChallengeAndUser();
+  newChallengeAndUser.userID = user.uid;
+  newChallengeAndUser.challengeID = challengeID;
+  newChallengeAndUser.challengeType = 'Math Quiz';
+  newChallengeAndUser.currentryRaised = 0.0;
+  newChallengeAndUser.exited = false;
+  newChallengeAndUser.createdAt = DateTime.now();
+
+  await FirebaseFirestore.instance
+      .collection('challengeanduser')
+      .add(newChallengeAndUser.toJson());
+}
+
 Future checkIfChallengeEntered(String challengeID) async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")

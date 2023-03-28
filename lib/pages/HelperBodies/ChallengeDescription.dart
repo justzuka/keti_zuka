@@ -3,11 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:keti_zuka/DatabaseModels/Challenge.dart';
 import 'package:keti_zuka/components/MyInputField.dart';
 import 'package:keti_zuka/components/OrangeButton.dart';
+import 'package:keti_zuka/pages/TaskPages/LeetcodeTaskPage.dart';
 
 import '../../DatabaseModels/LeetcodeProfile.dart';
 import '../../FirebaseStuff.dart';
 import '../../LeetcodeAPI.dart';
 import '../../constants.dart';
+import '../TaskPages/MathTaskPage.dart';
 
 class ChallengeDescription extends StatefulWidget {
   const ChallengeDescription({super.key, required this.challengeID});
@@ -136,7 +138,18 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                         entered
                             ? OrangeButton(
                                 label: "Go to Task",
-                                onPressFunc: () {},
+                                onPressFunc: () {
+                                  currentChallenge.challengeType ==
+                                          "Leetcode Challenge"
+                                      ? Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LeetcodeTaskPage()))
+                                      : Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  MathTaskPage()));
+                                },
                                 inverted: true,
                               )
                             : OrangeButton(
@@ -161,6 +174,13 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                                         print("Hello");
                                       }
                                     }
+                                  }
+                                  if (currentChallenge.challengeType ==
+                                      "Math Quiz") {
+                                    createChallengeAndUserforMath(
+                                        widget.challengeID);
+                                    enterUpdate();
+                                    print("Hello");
                                   }
                                 },
                                 inverted: true,
