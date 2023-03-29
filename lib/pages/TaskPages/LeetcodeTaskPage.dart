@@ -1,16 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:keti_zuka/DatabaseModels/ChallengeAndUser.dart';
 import 'package:keti_zuka/FirebaseStuff.dart';
 
+import '../../DatabaseModels/LeetcodeProfile.dart';
+import '../../FirebaseStuff.dart';
+import '../../LeetcodeAPI.dart';
 import '../../components/OrangeButton.dart';
 
 class LeetcodeTaskPage extends StatefulWidget {
-  const LeetcodeTaskPage({super.key});
+  const LeetcodeTaskPage({super.key, required this.challengeID});
+  final String? challengeID;
 
   @override
   State<LeetcodeTaskPage> createState() => _LeetcodeTaskPageState();
 }
 
 class _LeetcodeTaskPageState extends State<LeetcodeTaskPage> {
+  LeetcodeProfile? leetcodeProfile = null;
+  ChallengeAndUser? challengeAndUser = null;
+
+  Future<void> getChallengeAndUserAndLeetcode() async {
+    try {
+      ChallengeAndUser chandu =
+          await getChallengeAndUserData(widget.challengeID ?? "idk");
+      LeetcodeProfile? profile =
+          await getLeetcodeData(chandu.leetcodeUsername ?? "idk");
+      setState(() {
+        leetcodeProfile = profile;
+        challengeAndUser = chandu;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getChallengeAndUserAndLeetcode();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +59,30 @@ class _LeetcodeTaskPageState extends State<LeetcodeTaskPage> {
         height: double.infinity,
         color: Colors.white,
         child: Align(
-          child: Container(
-            height: 60,
-            width: 246,
-            child: OrangeButton(
-              label: 'Exit this Leetcode Challenge',
-              onPressFunc: () {},
-            ),
+          child: Column(
+            children: [
+              Text(
+                "Money you have raised since you entered the challenge: ${challengeAndUser?.currentryRaised ?? 0}",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+              Container(
+                height: 60,
+                width: 246,
+                child: OrangeButton(
+                  label: 'Exit this Leetcode Challenge',
+                  onPressFunc: () {},
+                ),
+              ),
+              Container(
+                height: 60,
+                width: 246,
+                child: OrangeButton(
+                  label: 'Update your Score',
+                  onPressFunc: () {},
+                ),
+              ),
+            ],
           ),
         ),
       ),

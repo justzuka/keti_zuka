@@ -144,11 +144,15 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                                       ? Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  LeetcodeTaskPage()))
+                                                  LeetcodeTaskPage(
+                                                      challengeID:
+                                                          widget.challengeID)))
                                       : Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  MathTaskPage()));
+                                                  MathTaskPage(
+                                                      challengeID:
+                                                          widget.challengeID)));
                                 },
                                 inverted: true,
                               )
