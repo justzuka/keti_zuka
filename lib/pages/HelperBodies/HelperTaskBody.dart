@@ -27,43 +27,49 @@ Widget challengeItem(String name, String challengeType, String challengeID,
           ),
         );
       },
-      child: Container(
-        width: double.infinity,
-        height: 100,
-        color: Colors.transparent,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
-          child: Row(children: [
-            Container(
-              width: 50,
-              height: 50,
-              color: const Color.fromARGB(255, 210, 210, 210),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 40),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    //select first 40 characters if the name is longer than 40
-                    name.length > 30 ? '${name.substring(0, 30)}..' : name,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                  ),
-                  Text(
-                    challengeType,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: double.infinity,
+          height: 100,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
+            child: Row(children: [
+              Container(
+                width: 50,
+                height: 50,
+                color: const Color.fromARGB(255, 210, 210, 210),
               ),
-            ),
-          ]),
+              Padding(
+                padding: const EdgeInsets.only(left: 40),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      //select first 40 characters if the name is longer than 40
+                      name.length > 30 ? '${name.substring(0, 30)}..' : name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                    Text(
+                      challengeType,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ]),
+          ),
         ),
       ),
     ),

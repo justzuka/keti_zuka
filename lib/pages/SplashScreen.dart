@@ -48,15 +48,15 @@ class SplashScreen extends StatelessWidget {
                               child: Text(
                                 "  GIVEEZY",
                                 style: TextStyle(
-                                  fontSize: 28,
+                                  fontSize: 38,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 2,
-                                  color: Color.fromARGB(255, 234, 28, 86),
+                                  color: Color.fromARGB(255, 0, 0, 0),
                                   shadows: <Shadow>[
                                     Shadow(
                                       offset: Offset(0, 5),
                                       blurRadius: 10.0,
-                                      color: Color.fromARGB(55, 0, 0, 0),
+                                      color: mainOrangeColor,
                                     ),
                                   ],
                                 ),

@@ -9,8 +9,6 @@ import 'DatabaseModels/Challenge.dart';
 import 'DatabaseModels/ChallengeAndUser.dart';
 import 'DatabaseModels/LeetcodeProfile.dart';
 
-User user = FirebaseAuth.instance.currentUser!;
-
 Future logIn(BuildContext context, String email, String password) async {
   try {
     await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -62,8 +60,10 @@ Future signUp(String email, String password, context) async {
 }
 
 Future getCurrentUserData() async {
-  var data =
-      await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+  var data = await FirebaseFirestore.instance
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .get();
   MyUser us = MyUser.fromSnapshot(data);
   return us;
 }
@@ -88,7 +88,7 @@ Future createChallenge(BuildContext context, String charityName,
 
     Challenge newChallenge = Challenge();
     newChallenge.charityName = charityName;
-    newChallenge.ownerID = user.uid;
+    newChallenge.ownerID = FirebaseAuth.instance.currentUser!.uid;
     newChallenge.challengeType = challengeType;
     newChallenge.approxAmount = approxAmount;
     newChallenge.currentlyRaised = 0.0;
@@ -103,13 +103,13 @@ Future createChallenge(BuildContext context, String charityName,
     //to this user update donortotal
     var data = await FirebaseFirestore.instance
         .collection("users")
-        .doc(user.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     MyUser us = MyUser.fromSnapshot(data);
     us.donorTotal = us.donorTotal! + approxAmount;
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(user.uid)
+        .doc(FirebaseAuth.instance.currentUser!.uid)
         .update(us.toJson());
 
     Navigator.of(context).pop();
@@ -125,7 +125,7 @@ Future createChallenge(BuildContext context, String charityName,
 Future alreadyParticipatesInLeetcodeFirebase() async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeType", isEqualTo: "Leetcode Challenge")
       .get();
   if (data.docs.isEmpty) {
@@ -138,7 +138,7 @@ Future alreadyParticipatesInLeetcodeFirebase() async {
 Future createChallengeAndUserforLeetcode(String challengeID,
     LeetcodeProfile leetcodeProfile, String leetcodeUsername) async {
   ChallengeAndUser newChallengeAndUser = ChallengeAndUser();
-  newChallengeAndUser.userID = user.uid;
+  newChallengeAndUser.userID = FirebaseAuth.instance.currentUser!.uid;
   newChallengeAndUser.challengeID = challengeID;
   newChallengeAndUser.challengeType = 'Leetcode Challenge';
   newChallengeAndUser.currentryRaised = 0.0;
@@ -156,7 +156,7 @@ Future createChallengeAndUserforLeetcode(String challengeID,
 
 Future createChallengeAndUserforMath(String challengeID) async {
   ChallengeAndUser newChallengeAndUser = ChallengeAndUser();
-  newChallengeAndUser.userID = user.uid;
+  newChallengeAndUser.userID = FirebaseAuth.instance.currentUser!.uid;
   newChallengeAndUser.challengeID = challengeID;
   newChallengeAndUser.challengeType = 'Math Quiz';
   newChallengeAndUser.currentryRaised = 0.0;
@@ -171,7 +171,7 @@ Future createChallengeAndUserforMath(String challengeID) async {
 Future checkIfChallengeEntered(String challengeID) async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeID", isEqualTo: challengeID)
       .get();
   if (data.docs.isEmpty) {
@@ -185,7 +185,7 @@ Future checkIfChallengeExited(String challengeID) async {
   try {
     var data = await FirebaseFirestore.instance
         .collection("challengeanduser")
-        .where("userID", isEqualTo: user.uid)
+        .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where("challengeID", isEqualTo: challengeID)
         .get();
     ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
@@ -205,7 +205,7 @@ Future checkIfChallengeExited(String challengeID) async {
 Future markChallengeAsExited(String challengeID) async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeID", isEqualTo: challengeID)
       .get();
   ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
@@ -220,7 +220,7 @@ Future markChallengeAsExited(String challengeID) async {
 Future getChallengeAndUserData(String challengeID) async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeID", isEqualTo: challengeID)
       .get();
   ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
@@ -239,18 +239,16 @@ Future updateUserLeetcodeScore(
     return null;
   }
   double add_easy =
-      ((challengeAndUser.easy as int) - (leetcodeProfile.easy as int)) * 1.5;
+      ((challengeAndUser.easy as int) - (leetcodeProfile.easy as int)) * 5;
   double add_medium =
-      ((challengeAndUser.medium as int) - (leetcodeProfile.medium as int)) *
-          3.5;
+      ((challengeAndUser.medium as int) - (leetcodeProfile.medium as int)) * 10;
   double add_hard =
-      ((challengeAndUser.medium as int) - (leetcodeProfile.medium as int)) *
-          6.5;
+      ((challengeAndUser.medium as int) - (leetcodeProfile.medium as int)) * 15;
 
   double totalRaise = add_easy + add_medium + add_hard;
   await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeID", isEqualTo: challengeAndUser.challengeID)
       .get()
       .then((value) => {
@@ -282,7 +280,10 @@ Future updateChallengeRaised(String challengeID, double amount) async {
 
 // write a function to update the user's help total
 Future updateUserHelpTotal(double amount) async {
-  await FirebaseFirestore.instance.collection("users").doc(user.uid).update({
+  await FirebaseFirestore.instance
+      .collection("users")
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .update({
     "helpTotal": FieldValue.increment(amount),
   });
 }
@@ -291,7 +292,7 @@ Future updateUserHelpTotal(double amount) async {
 Future updateChallengeAndUserRaised(String challengeID, double amount) async {
   await FirebaseFirestore.instance
       .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
+      .where("userID", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
       .where("challengeID", isEqualTo: challengeID)
       .get()
       .then((value) => {

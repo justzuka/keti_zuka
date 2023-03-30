@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:keti_zuka/DatabaseModels/Challenge.dart';
@@ -17,56 +18,62 @@ class DonorHomeBody extends StatefulWidget {
 Widget charityChallengeCurrentFinal(String charity, String challenge,
     String currentRaised, String finalRaised) {
   return Center(
-    child: Container(
-      width: double.infinity,
-      height: 100,
-      color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
-        child: Row(children: [
-          Container(
-            width: 50,
-            height: 50,
-            color: const Color.fromARGB(255, 210, 210, 210),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  charity,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  challenge,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  currentRaised,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  finalRaised,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: mainOrangeColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        width: double.infinity,
+        height: 100,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
+          child: Row(children: [
+            Container(
+              width: 50,
+              height: 50,
+              color: const Color.fromARGB(255, 210, 210, 210),
             ),
-          ),
-        ]),
+            Padding(
+              padding: const EdgeInsets.only(left: 40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    charity,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    challenge,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    currentRaised,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    finalRaised,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     ),
   );
@@ -94,7 +101,7 @@ class _DonorHomeBodyState extends State<DonorHomeBody> {
   Future getUserChallengeList() async {
     var data = await FirebaseFirestore.instance
         .collection("challenges")
-        .where('ownerID', isEqualTo: user.uid)
+        .where('ownerID', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .where('finished', isEqualTo: false)
         //.limit(10)
         .get();
@@ -234,8 +241,9 @@ class _DonorHomeBodyState extends State<DonorHomeBody> {
                           return charityChallengeCurrentFinal(
                               charity,
                               challenge,
-                              "\$" + currentlyRaised.toString(),
-                              "\$" + finalRaised.toString());
+                              "Currently Raised: \$" +
+                                  currentlyRaised.toString(),
+                              "Goal: \$" + finalRaised.toString());
 
                           // return Text(email);
                         },

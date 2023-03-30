@@ -127,6 +127,15 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                                         textAlign: TextAlign.center,
                                         style: TextStyle(fontSize: 20),
                                       ),
+                                      Text(
+                                        "\nEasy - \$5\nMedium - \$10\nHard - \$15",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.grey.shade600,
+                                            wordSpacing: 2,
+                                            letterSpacing: 0.6),
+                                      ),
                                       entered
                                           ? SizedBox.shrink()
                                           : MyInputField(

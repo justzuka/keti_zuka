@@ -79,7 +79,7 @@ class _SignupState extends State<Signup> {
                         ),
                         MyTextFormField(
                           hint: "Password",
-                          label: "Set Password",
+                          label: "Set Password (minimum 6 characters)",
                           hideText: true,
                           controller: passwordController,
                         ),

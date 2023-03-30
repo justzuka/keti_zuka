@@ -16,42 +16,48 @@ class HelperHomeBody extends StatefulWidget {
 
 Widget userNameMoneyEarned(String name, String money) {
   return Center(
-    child: Container(
-      width: double.infinity,
-      height: 100,
-      color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
-        child: Row(children: [
-          Container(
-            width: 50,
-            height: 50,
-            color: const Color.fromARGB(255, 210, 210, 210),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  money,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-              ],
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: double.infinity,
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border.all(color: mainOrangeColor),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, top: 10, bottom: 10),
+          child: Row(children: [
+            Container(
+              width: 50,
+              height: 50,
+              color: const Color.fromARGB(255, 210, 210, 210),
             ),
-          ),
-        ]),
+            Padding(
+              padding: const EdgeInsets.only(left: 40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    money,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ]),
+        ),
       ),
     ),
   );
@@ -139,7 +145,7 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                             "Total Earned",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w300,
                               fontSize: 22,
                               letterSpacing: 1,
                             ),
@@ -173,7 +179,7 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                   const Padding(
                     padding: EdgeInsets.all(20),
                     child: Text(
-                      "Leader Board",
+                      "LeaderBoard",
                       style: TextStyle(
                         color: Colors.black,
                         fontStyle: FontStyle.normal,
@@ -198,8 +204,8 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
 
                           double helpTotal = listOfUsers[index].helpTotal ?? -1;
                           print("$index");
-                          return userNameMoneyEarned(
-                              email, helpTotal.toStringAsFixed(3) + "\$");
+                          return userNameMoneyEarned("User: " + email,
+                              "Raised: " + helpTotal.toStringAsFixed(3) + "\$");
 
                           // return Text(email);
                         },
