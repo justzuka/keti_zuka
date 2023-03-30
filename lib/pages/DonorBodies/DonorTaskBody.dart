@@ -131,6 +131,7 @@ class _DonorTaskBodyState extends State<DonorTaskBody> {
                         label: "submit",
                         onPressFunc: () {
                           createChallenge(
+                              context,
                               charityNameController.text,
                               dropdownValue,
                               double.parse(approximateAmount.text),

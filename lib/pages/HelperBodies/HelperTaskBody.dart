@@ -138,6 +138,19 @@ class _HelperTaskBodyState extends State<HelperTaskBody> {
                         )
                       ],
                     ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(35.0),
+                      child: Text(
+                        "The more challenges you complete, the more points you earn for the charity!",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
                   ),
                   Expanded(
                     flex: 1,

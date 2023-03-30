@@ -43,6 +43,25 @@ class SplashScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 0),
                         child: Column(
                           children: [
+                            const Padding(
+                              padding: EdgeInsets.all(50.0),
+                              child: Text(
+                                "  GIVEEZY",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 2,
+                                  color: Color.fromARGB(255, 234, 28, 86),
+                                  shadows: <Shadow>[
+                                    Shadow(
+                                      offset: Offset(0, 5),
+                                      blurRadius: 10.0,
+                                      color: Color.fromARGB(55, 0, 0, 0),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                             SvgPicture.asset(loving1),
                             const Text(
                               "DO GOOD THE EASY WAY",

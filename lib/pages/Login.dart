@@ -1,10 +1,12 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keti_zuka/ErrorMessage.dart';
 import 'package:keti_zuka/FirebaseStuff.dart';
 import 'package:keti_zuka/components/MyTextFormField.dart';
 
 import 'package:keti_zuka/constants.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key, required this.toggleIndex});
@@ -104,6 +106,7 @@ class _LoginState extends State<Login> {
                                     elevation: 0,
                                     onPressed: () {
                                       logIn(
+                                        context,
                                         emailController.text.trim(),
                                         passwordController.text.trim(),
                                       );

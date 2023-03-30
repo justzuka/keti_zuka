@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:keti_zuka/DatabaseModels/MyUser.dart';
+import 'package:keti_zuka/ErrorMessage.dart';
+import 'package:quickalert/models/quickalert_type.dart';
 
 import 'DatabaseModels/Challenge.dart';
 import 'DatabaseModels/ChallengeAndUser.dart';
@@ -9,11 +11,16 @@ import 'DatabaseModels/LeetcodeProfile.dart';
 
 User user = FirebaseAuth.instance.currentUser!;
 
-Future logIn(String email, String password) async {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: email,
-    password: password,
-  );
+Future logIn(BuildContext context, String email, String password) async {
+  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+  } catch (e) {
+    print(e);
+    showAlert(context, e.toString(), QuickAlertType.error);
+  }
 }
 
 Future logOut() async {
@@ -46,8 +53,9 @@ Future signUp(String email, String password, context) async {
                   .doc(cred.user?.uid)
                   .set(newUser.toJson())
             });
-  } on FirebaseAuthException catch (e) {
+  } catch (e) {
     print(e);
+    showAlert(context, e.toString(), QuickAlertType.error);
   }
 
   Navigator.of(context).pop();
@@ -69,21 +77,49 @@ Future getCurrentChallengeData(String challengeID) async {
   return ch;
 }
 
-Future createChallenge(String charityName, String challengeType,
-    double approxAmount, String description) async {
-  Challenge newChallenge = Challenge();
-  newChallenge.charityName = charityName;
-  newChallenge.ownerID = user.uid;
-  newChallenge.challengeType = challengeType;
-  newChallenge.approxAmount = approxAmount;
-  newChallenge.currentlyRaised = 0.0;
-  newChallenge.finished = false;
-  newChallenge.description = description;
-  newChallenge.createdAt = DateTime.now();
+Future createChallenge(BuildContext context, String charityName,
+    String challengeType, double approxAmount, String description) async {
+  try {
+    showDialog(
+        context: context,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
 
-  await FirebaseFirestore.instance
-      .collection('challenges')
-      .add(newChallenge.toJson());
+    Challenge newChallenge = Challenge();
+    newChallenge.charityName = charityName;
+    newChallenge.ownerID = user.uid;
+    newChallenge.challengeType = challengeType;
+    newChallenge.approxAmount = approxAmount;
+    newChallenge.currentlyRaised = 0.0;
+    newChallenge.finished = false;
+    newChallenge.description = description;
+    newChallenge.createdAt = DateTime.now();
+
+    await FirebaseFirestore.instance
+        .collection('challenges')
+        .add(newChallenge.toJson());
+
+    //to this user update donortotal
+    var data = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(user.uid)
+        .get();
+    MyUser us = MyUser.fromSnapshot(data);
+    us.donorTotal = us.donorTotal! + approxAmount;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .update(us.toJson());
+
+    Navigator.of(context).pop();
+    showAlert(context, "You have successfully created a donation challenge",
+        QuickAlertType.success);
+  } catch (e) {
+    print(e);
+    Navigator.of(context).pop();
+    showAlert(context, e.toString(), QuickAlertType.error);
+  }
 }
 
 Future alreadyParticipatesInLeetcodeFirebase() async {
@@ -146,18 +182,22 @@ Future checkIfChallengeEntered(String challengeID) async {
 }
 
 Future checkIfChallengeExited(String challengeID) async {
-  var data = await FirebaseFirestore.instance
-      .collection("challengeanduser")
-      .where("userID", isEqualTo: user.uid)
-      .where("challengeID", isEqualTo: challengeID)
-      .get();
-  ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
-  if (data.docs.isEmpty) {
-    return false;
-  }
-  if (ch.exited == true) {
-    return true;
-  } else {
+  try {
+    var data = await FirebaseFirestore.instance
+        .collection("challengeanduser")
+        .where("userID", isEqualTo: user.uid)
+        .where("challengeID", isEqualTo: challengeID)
+        .get();
+    ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
+    if (data.docs.isEmpty) {
+      return false;
+    }
+    if (ch.exited == true) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e) {
     return false;
   }
 }

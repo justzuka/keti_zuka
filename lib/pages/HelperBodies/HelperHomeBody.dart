@@ -130,28 +130,44 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: SvgPicture.asset(coinSvg),
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Total Earned",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 22,
+                              letterSpacing: 1,
                             ),
-                            Text(
-                              userInfo == null
-                                  ? "Loading"
-                                  : "\$" +
-                                      (userInfo?.helpTotal ?? 0)
-                                          .toStringAsFixed(3),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 22,
-                                letterSpacing: 1,
-                              ),
-                            ),
-                          ]),
+                          ),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 60,
+                                  height: 60,
+                                  child: SvgPicture.asset(coinSvg),
+                                ),
+                                Text(
+                                  userInfo == null
+                                      ? "Loading"
+                                      : "\$" +
+                                          (userInfo?.helpTotal ?? 0)
+                                              .toStringAsFixed(3),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 22,
+                                    letterSpacing: 1,
+                                  ),
+                                ),
+                              ]),
+                        ],
+                      ),
                     ),
                   ),
                   const Padding(
