@@ -22,6 +22,7 @@ class ChallengeDescription extends StatefulWidget {
 class _ChallengeDescriptionState extends State<ChallengeDescription> {
   Challenge currentChallenge = Challenge();
   bool entered = false;
+  bool exited = false;
 
   final TextEditingController leetcodeUsernameController =
       TextEditingController();
@@ -36,8 +37,10 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
 
   Future<void> enterUpdate() async {
     bool temp = await checkIfChallengeEntered(widget.challengeID);
+    bool temp2 = await checkIfChallengeExited(widget.challengeID);
     setState(() {
       entered = temp;
+      exited = temp2;
     });
   }
 
@@ -135,60 +138,65 @@ class _ChallengeDescriptionState extends State<ChallengeDescription> {
                                               isText: true),
                                     ],
                                   ),
-                        entered
-                            ? OrangeButton(
-                                label: "Go to Task",
-                                onPressFunc: () {
-                                  currentChallenge.challengeType ==
-                                          "Leetcode Challenge"
-                                      ? Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LeetcodeTaskPage(
-                                                      challengeID:
-                                                          widget.challengeID)))
-                                      : Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  MathTaskPage(
-                                                      challengeID:
-                                                          widget.challengeID)));
-                                },
-                                inverted: true,
-                              )
-                            : OrangeButton(
-                                label: "enter",
-                                onPressFunc: () async {
-                                  if (currentChallenge.challengeType ==
-                                      "Leetcode Challenge") {
-                                    if (await alreadyParticipatesInLeetcodeFirebase()) {
-                                      print("Already participates in leetcode");
-                                    } else {
-                                      LeetcodeProfile? profile =
-                                          await getLeetcodeData(
-                                              leetcodeUsernameController.text);
-                                      if (profile == null) {
-                                        print("Error, profile null");
-                                      } else {
-                                        createChallengeAndUserforLeetcode(
-                                            widget.challengeID,
-                                            profile,
-                                            leetcodeUsernameController.text);
+                        exited
+                            ? Text("You have exited this challenge")
+                            : entered
+                                ? OrangeButton(
+                                    label: "Go to Task",
+                                    onPressFunc: () {
+                                      currentChallenge.challengeType ==
+                                              "Leetcode Challenge"
+                                          ? Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LeetcodeTaskPage(
+                                                          challengeID: widget
+                                                              .challengeID)))
+                                          : Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MathTaskPage(
+                                                          challengeID: widget
+                                                              .challengeID)));
+                                    },
+                                    inverted: true,
+                                  )
+                                : OrangeButton(
+                                    label: "enter",
+                                    onPressFunc: () async {
+                                      if (currentChallenge.challengeType ==
+                                          "Leetcode Challenge") {
+                                        if (await alreadyParticipatesInLeetcodeFirebase()) {
+                                          print(
+                                              "Already participates in leetcode");
+                                        } else {
+                                          LeetcodeProfile? profile =
+                                              await getLeetcodeData(
+                                                  leetcodeUsernameController
+                                                      .text);
+                                          if (profile == null) {
+                                            print("Error, profile null");
+                                          } else {
+                                            createChallengeAndUserforLeetcode(
+                                                widget.challengeID,
+                                                profile,
+                                                leetcodeUsernameController
+                                                    .text);
+                                            enterUpdate();
+                                            print("Hello");
+                                          }
+                                        }
+                                      }
+                                      if (currentChallenge.challengeType ==
+                                          "Math Quiz") {
+                                        createChallengeAndUserforMath(
+                                            widget.challengeID);
                                         enterUpdate();
                                         print("Hello");
                                       }
-                                    }
-                                  }
-                                  if (currentChallenge.challengeType ==
-                                      "Math Quiz") {
-                                    createChallengeAndUserforMath(
-                                        widget.challengeID);
-                                    enterUpdate();
-                                    print("Hello");
-                                  }
-                                },
-                                inverted: true,
-                              ),
+                                    },
+                                    inverted: true,
+                                  ),
                       ],
                     ),
                   ),

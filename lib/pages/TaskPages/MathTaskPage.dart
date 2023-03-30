@@ -25,11 +25,25 @@ class _MathTaskPageState extends State<MathTaskPage> {
   List<int> buttonStates = [0, 0, 0, 0];
   int correctIndex = 0;
   bool isAnswered = false;
+  ChallengeAndUser challengeAndUser = ChallengeAndUser();
+  double raisedNow = 0;
+
+  Future retrieveChangu() async {
+    ChallengeAndUser changu = await getChallengeAndUserData(widget.challengeID);
+    setState(() {
+      challengeAndUser = changu;
+      raisedNow = changu.currentryRaised ?? 0;
+    });
+  }
 
   void updateAll() {
-    updateChallengeAndUserRaised(widget.challengeID);
-    updateChallengeRaised(widget.challengeID);
-    updateUserHelpTotal();
+    updateChallengeAndUserRaised(widget.challengeID, 0.1);
+    updateChallengeRaised(widget.challengeID, 0.1);
+    updateUserHelpTotal(0.1);
+    print("Update all");
+    setState(() {
+      raisedNow += 0.1;
+    });
   }
 
   void onPressFunc(int index) {
@@ -66,6 +80,8 @@ class _MathTaskPageState extends State<MathTaskPage> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     nextAction();
+    retrieveChangu();
+    print('Change dependency');
   }
 
   @override
@@ -92,6 +108,9 @@ class _MathTaskPageState extends State<MathTaskPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Text(
+                  'Money Earned in this Challenge: \$${raisedNow.toStringAsFixed(3)}',
+                ),
                 Text(
                   question,
                   style: TextStyle(

@@ -16,8 +16,9 @@ class LeetcodeTaskPage extends StatefulWidget {
 }
 
 class _LeetcodeTaskPageState extends State<LeetcodeTaskPage> {
-  LeetcodeProfile? leetcodeProfile = null;
-  ChallengeAndUser? challengeAndUser = null;
+  LeetcodeProfile leetcodeProfile =
+      LeetcodeProfile(easy: 0, medium: 0, hard: 0);
+  ChallengeAndUser challengeAndUser = ChallengeAndUser();
 
   Future<void> getChallengeAndUserAndLeetcode() async {
     try {
@@ -26,7 +27,9 @@ class _LeetcodeTaskPageState extends State<LeetcodeTaskPage> {
       LeetcodeProfile? profile =
           await getLeetcodeData(chandu.leetcodeUsername ?? "idk");
       setState(() {
-        leetcodeProfile = profile;
+        if (profile != null) {
+          leetcodeProfile = profile;
+        }
         challengeAndUser = chandu;
       });
     } catch (e) {
@@ -60,27 +63,40 @@ class _LeetcodeTaskPageState extends State<LeetcodeTaskPage> {
         color: Colors.white,
         child: Align(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                "Money you have raised since you entered the challenge: ${challengeAndUser?.currentryRaised ?? 0}",
+                "Money you have raised since you entered the challenge: \$${challengeAndUser.currentryRaised ?? 0}",
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 20),
               ),
-              Container(
-                height: 60,
-                width: 246,
-                child: OrangeButton(
-                  label: 'Exit this Leetcode Challenge',
-                  onPressFunc: () {},
-                ),
-              ),
-              Container(
-                height: 60,
-                width: 246,
-                child: OrangeButton(
-                  label: 'Update your Score',
-                  onPressFunc: () {},
-                ),
+              Column(
+                children: [
+                  Container(
+                    height: 60,
+                    width: 246,
+                    child: OrangeButton(
+                      label: 'Exit this Leetcode Challenge',
+                      onPressFunc: () {
+                        markChallengeAsExited(widget.challengeID ?? "idk");
+                        // pop two screens from navigator
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  Container(
+                    height: 60,
+                    width: 246,
+                    child: OrangeButton(
+                      label: 'Update your Score',
+                      onPressFunc: () {
+                        updateUserLeetcodeScore(
+                            leetcodeProfile, challengeAndUser);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

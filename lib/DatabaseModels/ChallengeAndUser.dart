@@ -33,9 +33,9 @@ class ChallengeAndUser {
         currentryRaised = snapshot.data()['currentryRaised'] as double,
         challengeType = snapshot.data()['challengeType'],
         leetcodeUsername = snapshot.data()['leetcodeUsername'],
-        easy = snapshot.data()['easy'] as int,
-        medium = snapshot.data()['medium'] as int,
-        hard = snapshot.data()['hard'] as int,
+        easy = snapshot.data()['easy'],
+        medium = snapshot.data()['medium'],
+        hard = snapshot.data()['hard'],
         exited = snapshot.data()['exited'],
         createdAt = snapshot.data()['createdAt'].toDate();
 }

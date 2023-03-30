@@ -142,7 +142,9 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                             Text(
                               userInfo == null
                                   ? "Loading"
-                                  : "\$" + '${userInfo?.helpTotal}',
+                                  : "\$" +
+                                      (userInfo?.helpTotal ?? 0)
+                                          .toStringAsFixed(3),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: 22,
@@ -181,7 +183,7 @@ class _HelperHomeBodyState extends State<HelperHomeBody> {
                           double helpTotal = listOfUsers[index].helpTotal ?? -1;
                           print("$index");
                           return userNameMoneyEarned(
-                              email, "$helpTotal" + "\$");
+                              email, helpTotal.toStringAsFixed(3) + "\$");
 
                           // return Text(email);
                         },

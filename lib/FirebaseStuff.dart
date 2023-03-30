@@ -145,6 +145,38 @@ Future checkIfChallengeEntered(String challengeID) async {
   }
 }
 
+Future checkIfChallengeExited(String challengeID) async {
+  var data = await FirebaseFirestore.instance
+      .collection("challengeanduser")
+      .where("userID", isEqualTo: user.uid)
+      .where("challengeID", isEqualTo: challengeID)
+      .get();
+  ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
+  if (data.docs.isEmpty) {
+    return false;
+  }
+  if (ch.exited == true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+Future markChallengeAsExited(String challengeID) async {
+  var data = await FirebaseFirestore.instance
+      .collection("challengeanduser")
+      .where("userID", isEqualTo: user.uid)
+      .where("challengeID", isEqualTo: challengeID)
+      .get();
+  ChallengeAndUser ch = ChallengeAndUser.fromSnapshot(data.docs[0]);
+  ch.exited = true;
+  ch.leetcodeUsername = '';
+  await FirebaseFirestore.instance
+      .collection('challengeanduser')
+      .doc(data.docs[0].id)
+      .update(ch.toJson());
+}
+
 Future getChallengeAndUserData(String challengeID) async {
   var data = await FirebaseFirestore.instance
       .collection("challengeanduser")
@@ -174,6 +206,8 @@ Future updateUserLeetcodeScore(
   double add_hard =
       ((challengeAndUser.medium as int) - (leetcodeProfile.medium as int)) *
           6.5;
+
+  double totalRaise = add_easy + add_medium + add_hard;
   await FirebaseFirestore.instance
       .collection("challengeanduser")
       .where("userID", isEqualTo: user.uid)
@@ -193,26 +227,28 @@ Future updateUserLeetcodeScore(
                   (add_hard as double),
             })
           });
+  updateChallengeRaised(challengeAndUser.challengeID ?? "", totalRaise);
+  updateUserHelpTotal(totalRaise);
 }
 
-Future updateChallengeRaised(String challengeID) async {
+Future updateChallengeRaised(String challengeID, double amount) async {
   await FirebaseFirestore.instance
       .collection("challenges")
       .doc(challengeID)
       .update({
-    "currentlyRaised": FieldValue.increment(0.1),
+    "currentlyRaised": FieldValue.increment(amount),
   });
 }
 
 // write a function to update the user's help total
-Future updateUserHelpTotal() async {
+Future updateUserHelpTotal(double amount) async {
   await FirebaseFirestore.instance.collection("users").doc(user.uid).update({
-    "helpTotal": FieldValue.increment(0.1),
+    "helpTotal": FieldValue.increment(amount),
   });
 }
 
 //write a function to update challengeAndUser's currentlyraised
-Future updateChallengeAndUserRaised(String challengeID) async {
+Future updateChallengeAndUserRaised(String challengeID, double amount) async {
   await FirebaseFirestore.instance
       .collection("challengeanduser")
       .where("userID", isEqualTo: user.uid)
@@ -223,7 +259,7 @@ Future updateChallengeAndUserRaised(String challengeID) async {
                 .collection("challengeanduser")
                 .doc(value.docs[0].id)
                 .update({
-              "currentryRaised": FieldValue.increment(0.1),
+              "currentryRaised": FieldValue.increment(amount),
             })
           });
 }
