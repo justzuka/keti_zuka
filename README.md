@@ -1,16 +1,40 @@
-# keti_zuka
+# GIVEEZY
 
-A new Flutter project.
+GIVEEZY is a platform that allows donors to create challenges for charities and for helpers to participate in those challenges to raise money for those charities. Currently, the challenges offered are solving LeetCode problems and taking math quizzes.
+
+## Features
+
+- Donors can create challenges by specifying the amount of money they will donate to the chosen charity if a certain challenge is completed by a helper.
+- Helpers can participate in the challenge by completing the required task and submitting proof of completion.
+- Once the challenge is complete, the donor will donate the specified amount of money to the chosen charity.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter installed on your local machine
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Installation
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone the repository
+
+
+2. Install the dependencies using the following command:
+
+flutter pub get
+
+
+### Usage
+
+1. Launch the app on your local machine using `flutter run` command.
+2. Create an account and log in as a donor or helper.
+3. Donors can create challenges by specifying the amount of money they will donate to the chosen charity if a certain challenge is completed by a helper.
+4. Helpers can participate in the challenge by completing the required task and submitting proof of completion.
+5. Once the challenge is complete, the donor will donate the specified amount of money to the chosen charity.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+
