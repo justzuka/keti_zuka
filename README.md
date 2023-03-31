@@ -29,7 +29,7 @@ flutter pub get
 1. Launch the app on your local machine using `flutter run` command.
 2. Create an account and log in as a donor or helper.
 3. Donors can create challenges by specifying the amount of money they will donate to the chosen charity if a certain challenge is completed by a helper.
-4. Helpers can participate in the challenge by completing the required task and submitting proof of completion.
+4. Helpers can participate in the challenge by completing the required task.
 5. Once the challenge is complete, the donor will donate the specified amount of money to the chosen charity.
 
 ## License
