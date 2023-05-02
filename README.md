@@ -17,12 +17,19 @@ GIVEEZY is a platform that allows donors to create challenges for charities and 
 ### Installation
 
 1. Clone the repository
-
+```
+git clone https://github.com/justzuka/keti_zuka.git
+```
 
 2. Install the dependencies using the following command:
-
+```
 flutter pub get
+```
 
+3. At this point you can either connect a physical or virtual emulator. Or you can simply open the app in the browser (not the best looking UI in that case):
+```
+flutter run
+```
 
 ### Usage
 
