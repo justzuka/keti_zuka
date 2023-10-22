@@ -31,6 +31,16 @@ flutter pub get
 flutter run
 ```
 
+## App's UI
+<div align="center">
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/ffdd26aa-306d-411e-bb1e-443d6fcb8d54" width="150" />
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/b46b584d-00d1-4574-9407-1d9a832dbd37" width="150" />
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/42fbe9d9-0875-4d6b-947b-25fcacb01e6b" width="150" />
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/509b5d0a-da90-4166-a869-a232ac61e9df" width="150" />
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/c76307ff-95ca-4a65-9c82-359bdef4c9bd" width="150" />
+  <img src="https://github.com/justzuka/keti_zuka/assets/64359365/5342a1b8-0ab1-4834-a92e-ba2a7f845b83" width="150" />
+</div>
+
 ### Usage
 
 1. Launch the app on your local machine using `flutter run` command.
