@@ -1,6 +1,6 @@
 # GIVEEZY
 
-GIVEEZY is a platform that allows donors to create challenges for charities and for helpers to participate in those challenges to raise money for those charities. Currently, the challenges offered are solving LeetCode problems and taking math quizzes.
+GIVEEZY is a prototype of a platform that allows donors to create challenges for charities and for helpers to participate in those challenges to raise money for those charities. Currently, the challenges offered are solving LeetCode problems and taking math quizzes. The app doesn't support money transfer yet.
 
 ## Features
 
